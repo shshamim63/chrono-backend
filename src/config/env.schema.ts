@@ -12,4 +12,4 @@ export const envSchema = {
   },
 } as const;
 
-export const env = validateEnv(envSchema);
+export const envValues = () => validateEnv(envSchema);
