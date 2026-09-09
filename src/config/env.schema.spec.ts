@@ -6,7 +6,8 @@ import { envSchema } from './env.schema';
 describe('Env validation', () => {
   const createConfigModule = () =>
     ConfigModule.forRoot({
-      isGlobal: true,
+      isGlobal: false,
+      ignoreEnvFile: true,
       validate: () => validateEnv(envSchema),
     });
 
