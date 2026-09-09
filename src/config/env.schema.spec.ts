@@ -22,9 +22,11 @@ describe('Env validation', () => {
         NODE_ENV: undefined,
       });
 
-      await expect(createConfigModule()).rejects.toThrow(
-        'PORT must be a number',
-      );
+      expect(
+        Test.createTestingModule({
+          imports: [createConfigModule()],
+        }).compile(),
+      ).rejects.toThrow('PORT must be a number');
     });
 
     it('throws when a required variable is missing', async () => {
@@ -40,11 +42,15 @@ describe('Env validation', () => {
         DATABASE_URL: undefined,
       });
 
-      await expect(
-        ConfigModule.forRoot({
-          isGlobal: true,
-          validate: () => validateEnv(schema),
-        }),
+      expect(
+        Test.createTestingModule({
+          imports: [
+            ConfigModule.forRoot({
+              isGlobal: true,
+              validate: () => validateEnv(schema),
+            }),
+          ],
+        }).compile(),
       ).rejects.toThrow('DATABASE_URL is required');
     });
   });
